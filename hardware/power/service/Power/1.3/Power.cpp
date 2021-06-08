@@ -30,6 +30,10 @@
 
 #include "Power.h"
 
+#ifndef TAP_TO_WAKE_NODE
+#define TAP_TO_WAKE_NODE "/dev/input/event2"
+#endif
+
 namespace android {
 namespace hardware {
 namespace power {
@@ -237,7 +241,7 @@ Return<void> Power::setFeature(Feature feature, bool activate)  {
             int fd;
             ssize_t ret;
             struct input_event event;
-            fd = open("/dev/input/event2", O_RDWR);
+            fd = open(TAP_TO_WAKE_NODE, O_RDWR);
             if (fd < 0) {
                 ALOGI("setFeature feature:%d; failed to open fd", (int)feature);
                 break;

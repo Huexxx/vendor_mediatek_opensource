@@ -27,6 +27,10 @@ LOCAL_SHARED_LIBRARIES := liblog \
         android.hardware.power@1.3 \
         vendor.mediatek.hardware.mtkpower@1.0
 
+ifneq ($(TARGET_TAP_TO_WAKE_NODE),)
+  LOCAL_CFLAGS += -DTAP_TO_WAKE_NODE=\"$(TARGET_TAP_TO_WAKE_NODE)\"
+endif
+
 LOCAL_MODULE := android.hardware.power@1.3-impl-mediatek
 LOCAL_PROPRIETARY_MODULE := true
 LOCAL_MODULE_RELATIVE_PATH := hw
