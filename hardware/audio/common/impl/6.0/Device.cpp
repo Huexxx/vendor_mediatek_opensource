@@ -173,7 +173,7 @@ std::tuple<Result, sp<IStreamOut>> Device::openOutputStreamImpl(int32_t ioHandle
         streamOut = new StreamOut(this, halStream);
         ++mOpenedStreamsCount;
     }
-    status_t convertStatus = HidlUtils::audioConfigFromHal(halConfig, suggestedConfig);
+    status_t convertStatus = HidlUtils::audioConfigFromHal(halConfig, false /* isInput */, suggestedConfig);
     ALOGW_IF(convertStatus != OK, "%s: suggested config with incompatible fields", __func__);
     return {analyzeStatus("open_output_stream", status, {EINVAL} /*ignore*/), streamOut};
 }
@@ -201,7 +201,7 @@ std::tuple<Result, sp<IStreamIn>> Device::openInputStreamImpl(
         streamIn = new StreamIn(this, halStream);
         ++mOpenedStreamsCount;
     }
-    status_t convertStatus = HidlUtils::audioConfigFromHal(halConfig, suggestedConfig);
+    status_t convertStatus = HidlUtils::audioConfigFromHal(halConfig, true /* isInput */, suggestedConfig);
     ALOGW_IF(convertStatus != OK, "%s: suggested config with incompatible fields", __func__);
     return {analyzeStatus("open_input_stream", status, {EINVAL} /*ignore*/), streamIn};
 }
