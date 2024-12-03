@@ -1,3 +1,6 @@
+soong_namespace {
+}
+
 cc_prebuilt_library_shared {
     name: "libwifi-hal-mtk",
     vendor: true,
