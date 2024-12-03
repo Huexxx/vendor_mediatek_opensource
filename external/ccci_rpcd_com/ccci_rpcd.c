@@ -274,47 +274,47 @@ _Exit:
  * Support lib Section
  ***************************************************************************/
 
-/* tc1 lib --------------------------------------------------------------------------------------- */
-#define TC1_SUPPORT_LIB_PATH	"/vendor/lib/libccci_tc1_srv.so"
+/* tc1 lib ---------------------------------------------------------------------------------------
+#define TC1_SUPPORT_LIB_PATH	"/vendor/lib/libccci_tc1_srv.so"  */
 static void *tc1_support_lib = NULL;
 static int tc1_lib_ready = 0;
 int (*tc1_rpc_srv_entry)(int ops_id, RPC_PACKET_INFO *packet_info, int *packet_num, int buf[]);
 int (*tc_lib_init)(void);
 
-int load_support_lib(void)
-{
-    const char *error;
-
-    /* Tc1 section */
-    tc1_support_lib = dlopen(TC1_SUPPORT_LIB_PATH, RTLD_NOW);
-    if(NULL == tc1_support_lib){
-        LOGD("TC1 lib not support for current project!(%s)\n", dlerror());
-        return -1;
-    }
-    error = dlerror(); /* to clear previous error msg */
-    tc_lib_init = dlsym(tc1_support_lib, "tc1_lib_init");
-    error = dlerror();
-    if (NULL != error) {
-        LOGE("Load tc1_lib_init api fail!!(%s)\n", error);
-        dlclose(tc1_support_lib);
-        return -1;
-    }
-    tc1_rpc_srv_entry = dlsym(tc1_support_lib, "tc1_rpc_srv_entry");
-    error = dlerror();
-    if (NULL != error) {
-        LOGE("Load tc1_rpc_srv_entry api fail!!(%s)\n", error);
-        dlclose(tc1_support_lib);
-        return -1;
-    }
-    if (tc_lib_init() < 0) {
-    	LOGE("tc1_rpc_lib init fail!!\n");
-        dlclose(tc1_support_lib);
-        return -1;
-    }
-    tc1_lib_ready = 1;
-
-    return 0;
-}
+//int load_support_lib(void)
+//{
+//    const char *error;
+//
+//    /* Tc1 section */
+//    tc1_support_lib = dlopen(TC1_SUPPORT_LIB_PATH, RTLD_NOW);
+//    if(NULL == tc1_support_lib){
+//        LOGD("TC1 lib not support for current project!(%s)\n", dlerror());
+//        return -1;
+//    }
+//    error = dlerror(); /* to clear previous error msg */
+//    tc_lib_init = dlsym(tc1_support_lib, "tc1_lib_init");
+//    error = dlerror();
+//    if (NULL != error) {
+//        LOGE("Load tc1_lib_init api fail!!(%s)\n", error);
+//        dlclose(tc1_support_lib);
+//        return -1;
+//    }
+//    tc1_rpc_srv_entry = dlsym(tc1_support_lib, "tc1_rpc_srv_entry");
+//    error = dlerror();
+//    if (NULL != error) {
+//        LOGE("Load tc1_rpc_srv_entry api fail!!(%s)\n", error);
+//        dlclose(tc1_support_lib);
+//        return -1;
+//    }
+//    if (tc_lib_init() < 0) {
+//    	LOGE("tc1_rpc_lib init fail!!\n");
+//        dlclose(tc1_support_lib);
+//        return -1;
+//    }
+//    tc1_lib_ready = 1;
+//
+//    return 0;
+//}
 
 static int tc1_srv_check(int ops_id, RPC_PACKET_INFO *packet_info, int *packet_num, int buf[])
 {
@@ -438,7 +438,7 @@ int main(int argc, char *argv[])
     if(signal(SIGALRM, signal_treatment)==SIG_ERR)
         LOGE("can't catch SIGALRM\n");
 
-    load_support_lib();
+//    load_support_lib();
 
     while(exit_signal == 0)
     {
