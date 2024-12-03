@@ -6,7 +6,6 @@ cc_binary {
         "-std=c++11",
         "-Wall",
     ],
-    clang: true,
     name: "netdc",
     shared_libs: [
         "libcutils",

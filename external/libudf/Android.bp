@@ -139,7 +139,6 @@ cc_library_shared {
     vendor_available: true,
     compile_multilib: "both",
 
-    clang: true,
     sanitize: {
         never: true,
     },
